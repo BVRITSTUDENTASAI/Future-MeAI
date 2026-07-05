@@ -47,9 +47,9 @@ Level: ${level}
         });
 
     } catch (error) {
-        console.log(" FULL ERROR:");
+        console.log("🔥 FULL ERROR:");
         console.log(error);
-        console.log("MESSAGE:", error.message);
+        console.log("🔥 MESSAGE:", error.message);
 
         return res.status(500).json({
             error: error.message
