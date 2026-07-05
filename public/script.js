@@ -1,223 +1,256 @@
-// Navigation Buttons
+// =============================
+// FutureMe AI - JavaScript
+// =============================
 
+// Buttons
 const startBtn = document.getElementById("startBtn");
-const roadmapBtn = document.getElementById("generateBtn");
+const generateBtn = document.getElementById("generateBtn");
+const careerForm = document.getElementById("careerForm");
 
-startBtn.addEventListener("click", function () {
-    document.getElementById("careerForm").scrollIntoView({
+// Scroll to form
+startBtn.onclick = function () {
+    careerForm.scrollIntoView({
         behavior: "smooth"
     });
-});
+};
 
-roadmapBtn.addEventListener("click", function () {
-    document.getElementById("careerForm").scrollIntoView({
+generateBtn.onclick = function () {
+    careerForm.scrollIntoView({
         behavior: "smooth"
     });
-});
+};
+// =============================
+// Navigation
+// =============================
 
+const menuItems = document.querySelectorAll("nav ul li");
 
-// Navbar Menu
+menuItems.forEach(function(item){
 
-document.querySelectorAll("nav ul li").forEach(function (item) {
+    item.onclick = function(){
 
-    item.addEventListener("click", function () {
+        let text = item.innerText;
 
-        let section = item.innerText.toLowerCase();
-
-        if (section === "home") {
+        if(text === "Home"){
             document.getElementById("hero").scrollIntoView({
-                behavior: "smooth"
+                behavior:"smooth"
             });
         }
 
-        else if (section === "features") {
+        if(text === "Features"){
             document.getElementById("features").scrollIntoView({
-                behavior: "smooth"
+                behavior:"smooth"
             });
         }
 
-        else if (section === "roadmaps") {
+        if(text === "Roadmaps"){
             document.getElementById("careerForm").scrollIntoView({
-                behavior: "smooth"
+                behavior:"smooth"
             });
         }
 
-        else if (section === "about") {
+        if(text === "About"){
             document.getElementById("steps").scrollIntoView({
-                behavior: "smooth"
+                behavior:"smooth"
             });
         }
 
-        else if (section === "contact") {
+        if(text === "Contact"){
             document.querySelector("footer").scrollIntoView({
-                behavior: "smooth"
+                behavior:"smooth"
             });
         }
 
-    });
+    };
 
 });
 
 
+// =============================
 // Form Validation
+// =============================
 
 const form = document.querySelector("#careerForm form");
 
-form.addEventListener("submit", function (e) {
+form.addEventListener("submit", function(e){
 
     e.preventDefault();
 
-    const name = form.querySelector('input[placeholder="Your Name"]');
-    const skills = form.querySelector('input[placeholder="Current Skills"]');
-    const career = form.querySelector('input[placeholder="Dream Career"]');
-    const level = form.querySelector("select");
+    const inputs = form.querySelectorAll("input");
+    const select = form.querySelector("select");
 
-    if (
-        name.value.trim() === "" ||
-        skills.value.trim() === "" ||
-        career.value.trim() === "" ||
-        level.selectedIndex === 0
-    ) {
+    for(let i=0;i<inputs.length;i++){
 
-        alert("Please fill all the fields.");
+        if(inputs[i].value.trim()==""){
+            alert("Please fill all the fields.");
+            inputs[i].focus();
+            return;
+        }
 
+    }
+
+    if(select.selectedIndex==0){
+        alert("Please select your experience level.");
+        select.focus();
         return;
-
     }
 
     const button = form.querySelector("button");
 
     button.disabled = true;
 
-    let dots = 0;
+    let count = 0;
 
     button.innerHTML = "Generating";
 
-    const loading = setInterval(function () {
+    const loading = setInterval(function(){
 
-        dots++;
+        count++;
 
-        button.innerHTML = "Generating" + ".".repeat(dots % 4);
+        button.innerHTML = "Generating" + ".".repeat(count%4);
 
-    }, 400);
+    },500);
 
-
-    setTimeout(function () {
+    setTimeout(function(){
 
         clearInterval(loading);
 
-        button.innerHTML = "Roadmap Generated ✓";
+        button.innerHTML="Roadmap Generated ✓";
 
-        setTimeout(function () {
+        alert("Your personalized roadmap will be generated soon.");
 
-            alert(
-                "FutureMe AI will soon generate a personalized roadmap based on your career goal."
-            );
+        form.reset();
 
-            form.reset();
+        button.disabled=false;
 
-            button.disabled = false;
+        button.innerHTML="Generate Career Roadmap";
 
-            button.innerHTML = "Generate Career Roadmap";
-
-        }, 1000);
-
-    }, 3000);
+    },3000);
 
 });
 
 
-// Scroll Animation
+// =============================
+// Reveal Sections on Scroll
+// =============================
 
-const revealItems = document.querySelectorAll(
-    "#hero, #careerForm, .card, .step, footer"
+const sections = document.querySelectorAll(
+"#hero,#careerForm,#features,#steps,footer,.card,.step"
 );
 
-const observer = new IntersectionObserver(function (entries) {
+const observer = new IntersectionObserver(function(entries){
 
-    entries.forEach(function (entry) {
+    entries.forEach(function(entry){
 
-        if (entry.isIntersecting) {
+        if(entry.isIntersecting){
 
-            entry.target.classList.add("show");
+            entry.target.style.opacity="1";
+            entry.target.style.transform="translateY(0px)";
 
         }
 
     });
 
-}, {
-    threshold: 0.2
+},{
+    threshold:0.2
 });
 
-revealItems.forEach(function (item) {
+sections.forEach(function(section){
 
-    observer.observe(item);
+    section.style.opacity="0";
+    section.style.transform="translateY(40px)";
+    section.style.transition="all 0.8s";
+
+    observer.observe(section);
 
 });
 
 
+// =============================
 // Navbar Shadow
+// =============================
 
-window.addEventListener("scroll", function () {
+window.addEventListener("scroll",function(){
 
-    const nav = document.querySelector("nav");
+    const nav=document.querySelector("nav");
 
-    if (window.scrollY > 30) {
+    if(window.scrollY>20){
 
-        nav.style.boxShadow = "0 8px 25px rgba(0,0,0,0.12)";
+        nav.style.boxShadow="0 10px 25px rgba(0,0,0,0.10)";
 
     }
 
-    else {
+    else{
 
-        nav.style.boxShadow = "none";
+        nav.style.boxShadow="none";
 
     }
 
 });
 
 
-// Card Hover Effect
+// =============================
+// Hero Image Floating
+// =============================
 
-document.querySelectorAll(".card").forEach(function (card) {
+const heroImage=document.querySelector("#rightHero img");
 
-    card.addEventListener("mouseenter", function () {
+if(heroImage){
 
-        card.style.transform = "translateY(-8px)";
+    let moveUp=true;
+
+    setInterval(function(){
+
+        if(moveUp){
+
+            heroImage.style.transform="translateY(-12px)";
+            moveUp=false;
+
+        }
+
+        else{
+
+            heroImage.style.transform="translateY(0px)";
+            moveUp=true;
+
+        }
+
+    },1500);
+
+}
+
+
+// =============================
+// Feature Card Hover
+// =============================
+
+const cards=document.querySelectorAll(".card");
+
+cards.forEach(function(card){
+
+    card.addEventListener("mouseenter",function(){
+
+        card.style.transform="translateY(-10px)";
+        card.style.boxShadow="0 12px 30px rgba(0,0,0,0.15)";
 
     });
 
-    card.addEventListener("mouseleave", function () {
+    card.addEventListener("mouseleave",function(){
 
-        card.style.transform = "translateY(0px)";
+        card.style.transform="translateY(0px)";
+        card.style.boxShadow="0 6px 16px rgba(0,0,0,0.08)";
 
     });
 
 });
 
 
-// Hero Image Floating Animation
+// =============================
+// Welcome Message
+// =============================
 
-const heroImage = document.querySelector("#rightHero img");
+window.onload=function(){
 
-let direction = 1;
+    console.log("Welcome to FutureMe AI");
 
-setInterval(function () {
-
-    if (direction === 1) {
-
-        heroImage.style.transform = "translateY(-10px)";
-
-        direction = 0;
-
-    }
-
-    else {
-
-        heroImage.style.transform = "translateY(0px)";
-
-        direction = 1;
-
-    }
-
-}, 1500);
+};
