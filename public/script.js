@@ -69,67 +69,101 @@ menuItems.forEach(function(item){
 // =============================
 // Form Validation
 // =============================
+// =============================
+// Form Submission + AI
+// =============================
 
 const form = document.querySelector("#careerForm form");
 
-form.addEventListener("submit", function(e){
+form.addEventListener("submit", async function(e){
 
     e.preventDefault();
 
-    const inputs = form.querySelectorAll("input");
-    const select = form.querySelector("select");
+    const name = form.querySelector('input[placeholder="Your Name"]').value.trim();
+    const skills = form.querySelector('input[placeholder="Current Skills"]').value.trim();
+    const career = form.querySelector('input[placeholder="Dream Career"]').value.trim();
+    const level = form.querySelector("select").value;
 
-    for(let i=0;i<inputs.length;i++){
-
-        if(inputs[i].value.trim()==""){
-            alert("Please fill all the fields.");
-            inputs[i].focus();
-            return;
-        }
-
+    if(name==="" || skills==="" || career===""){
+        alert("Please fill all the fields.");
+        return;
     }
 
-    if(select.selectedIndex==0){
+    if(level==="Select Experience Level"){
         alert("Please select your experience level.");
-        select.focus();
         return;
     }
 
     const button = form.querySelector("button");
 
     button.disabled = true;
+    button.innerHTML = "Generating...";
 
-    let count = 0;
+    try{
 
-    button.innerHTML = "Generating";
+        const response = await fetch("/generate",{
 
-    const loading = setInterval(function(){
+            method:"POST",
 
-        count++;
+            headers:{
+                "Content-Type":"application/json"
+            },
 
-        button.innerHTML = "Generating" + ".".repeat(count%4);
+            body:JSON.stringify({
+                name,
+                skills,
+                career,
+                level
+            })
 
-    },500);
+        });
 
-    setTimeout(function(){
+        const data = await response.json();
 
-        clearInterval(loading);
+        button.innerHTML = "Roadmap Generated ✓";
 
-        button.innerHTML="Roadmap Generated ✓";
+        let result = document.getElementById("result");
 
-        alert("Your personalized roadmap will be generated soon.");
+        if(!result){
 
-        form.reset();
+            result = document.createElement("div");
+            result.id = "result";
 
-        button.disabled=false;
+            result.style.margin = "50px auto";
+            result.style.width = "90%";
+            result.style.maxWidth = "1000px";
+            result.style.padding = "30px";
+            result.style.background = "rgba(255,255,255,0.12)";
+            result.style.backdropFilter = "blur(12px)";
+            result.style.borderRadius = "15px";
+            result.style.whiteSpace = "pre-wrap";
+            result.style.lineHeight = "30px";
+            result.style.fontSize = "17px";
 
-        button.innerHTML="Generate Career Roadmap";
+            document.body.insertBefore(result, document.querySelector("footer"));
 
-    },3000);
+        }
+
+        result.innerHTML = "<h2>Your AI Career Roadmap</h2><br>" + data.roadmap;
+
+        result.scrollIntoView({
+            behavior:"smooth"
+        });
+
+    }
+
+    catch(error){
+
+        console.log(error);
+
+        alert("Unable to connect to AI.");
+
+    }
+
+    button.disabled = false;
+    button.innerHTML = "Generate Career Roadmap";
 
 });
-
-
 // =============================
 // Reveal Sections on Scroll
 // =============================
