@@ -151,199 +151,33 @@ const data = await response.json();
     }
     catch(error){
 
-    console.log(error);
-
+    console.error(error);
     let result = document.getElementById("result");
 
     if(!result){
+
         result = document.createElement("div");
         result.id = "result";
         document.body.insertBefore(result, document.querySelector("footer"));
-    }
-
-    let roadmap = "";
-
-    if(career.toLowerCase().includes("software")){
-
-        roadmap = `
-<h2>🚀 Software Engineer Career Roadmap</h2>
-
-<p>Hello <b>${name}</b>, based on your experience level (<b>${level}</b>) and your current skills (<b>${skills}</b>), here is your personalized roadmap.</p>
-
-<h3>Phase 1: Programming Fundamentals</h3>
-<ul>
-<li>Master Java, Python or JavaScript.</li>
-<li>Understand Object-Oriented Programming.</li>
-<li>Practice coding every day.</li>
-</ul>
-
-<h3>Phase 2: Core Computer Science</h3>
-<ul>
-<li>Data Structures & Algorithms.</li>
-<li>Operating Systems.</li>
-<li>Database Management Systems.</li>
-<li>Computer Networks.</li>
-</ul>
-
-<h3>Phase 3: Development</h3>
-<ul>
-<li>Build 5 real-world projects.</li>
-<li>Learn Git & GitHub.</li>
-<li>Learn React and Node.js.</li>
-</ul>
-
-<h3>Phase 4: Career Preparation</h3>
-<ul>
-<li>Create resume.</li>
-<li>Prepare for coding interviews.</li>
-<li>Apply for internships.</li>
-</ul>
-`;
 
     }
 
-    else if(career.toLowerCase().includes("data")){
-
-        roadmap = `
-<h2>📊 Data Scientist Career Roadmap</h2>
-
-<p>Hello <b>${name}</b>, your current skills are <b>${skills}</b>. Here's your learning path.</p>
-
-<h3>Phase 1</h3>
-<ul>
-<li>Python Programming</li>
-<li>Statistics</li>
-<li>Probability</li>
-<li>SQL</li>
-</ul>
-
-<h3>Phase 2</h3>
-<ul>
-<li>NumPy</li>
-<li>Pandas</li>
-<li>Matplotlib</li>
-<li>Data Cleaning</li>
-</ul>
-
-<h3>Phase 3</h3>
-<ul>
-<li>Machine Learning</li>
-<li>Scikit-Learn</li>
-<li>Model Evaluation</li>
-<li>Deep Learning Basics</li>
-</ul>
-
-<h3>Phase 4</h3>
-<ul>
-<li>Portfolio Projects</li>
-<li>Kaggle Competitions</li>
-<li>Resume & Interviews</li>
-</ul>
-`;
-
-    }
-
-    else if(career.toLowerCase().includes("ui") || career.toLowerCase().includes("ux") || career.toLowerCase().includes("designer")){
-
-        roadmap = `
-<h2>🎨 UI/UX Designer Roadmap</h2>
-
-<ul>
-<li>Learn UI Design Principles.</li>
-<li>Master Figma.</li>
-<li>Study Color Theory.</li>
-<li>Create Mobile App Designs.</li>
-<li>Build Portfolio.</li>
-<li>Learn User Research.</li>
-<li>Prepare Case Studies.</li>
-</ul>
-`;
-
-    }
-
-    else{
-
-        roadmap = `
-<h2>🎯 ${career} Career Roadmap</h2>
-
-<p>Hello <b>${name}</b>.</p>
-
-<p>Your current skills: <b>${skills}</b></p>
-
-<ul>
-<li>Research industry requirements.</li>
-<li>Take professional certification courses.</li>
-<li>Develop practical experience.</li>
-<li>Create strong projects.</li>
-<li>Improve communication skills.</li>
-<li>Network with professionals.</li>
-<li>Build a portfolio.</li>
-<li>Prepare resume.</li>
-<li>Practice interviews.</li>
-<li>Apply confidently.</li>
-</ul>
-`;
-
-    }
-    roadmap += `
-
-<hr>
-
-<h3>🎉 Final Words</h3>
-
-<p>
-Well done, <b>${name}</b>! If you've read this far, you've already taken the first step that many people never do—actually starting.
-</p>
-
-<p>
-Your dream of becoming a <b>${career}</b> isn't just a dream anymore—it's now a plan. Every new skill you learn, every project you build, and every mistake you fix is helping you become a better version of yourself.
-</p>
-
-<p>
-Don't worry if things feel difficult sometimes. Every professional has stared at a screen wondering why nothing works... only to realize they forgot a tiny semicolon, misspelled one variable, or spent two hours debugging while the solution was on the first line. 😂
-</p>
-
-<p>
-Imagine yourself one year from now. The projects you create today could become the reason someone offers you your dream job tomorrow. Your future teammates might be waiting to meet you—they just don't know it yet.
-</p>
-
-<p>
-Stay curious. Keep building. Ask questions. Learn from failures. Celebrate small wins. Repeat.
-</p>
-
-<p>
-And remember... the only thing standing between you and your dream career is a series of small, consistent steps. So start today—your future self is already cheering for you! 🚀🔥
-</p>
-
-<div style="margin-top:30px;padding:20px;border-radius:15px;background:rgba(255,209,102,0.15);border:1px solid rgba(255,209,102,0.3);text-align:center;">
-<h3 style="margin-bottom:10px;">🏆 FutureMe AI Prediction</h3>
-
-<p style="font-size:18px;">
-We predict that if <b>${name}</b> stays consistent and keeps improving their <b>${skills}</b> skills, they'll be well on their way to becoming an excellent <b>${career}</b>. 🚀
-</p>
-
-<p style="font-size:16px;">
-Now close this roadmap... and go build something amazing. Your future employer is waiting. 😉
-</p>
-</div>
-`;
-    result.innerHTML = roadmap;
+    result.innerHTML = `
+        <h2>⚠ Unable to Generate Roadmap</h2>
+        <p>
+        The server is currently unavailable.
+        Please try again after a few moments.
+        </p>
+    `;
 
     result.scrollIntoView({
         behavior:"smooth"
     });
-
-    button.disabled = false;
-    button.innerHTML = "Generate Career Roadmap";
-}
-    button.disabled = false;
-    button.innerHTML = "Generate Career Roadmap";
-
-});
+    };
+})
 // =============================
 // Reveal Sections on Scroll
 // =============================
-
 const sections = document.querySelectorAll(
 "#hero,#careerForm,#features,#steps,footer,.card,.step"
 );

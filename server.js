@@ -16,96 +16,413 @@ app.post("/generate", (req, res) => {
 
     const { name, skills, career, level } = req.body;
 
-    let roadmap = "";
-
     if (career.toLowerCase().includes("software")) {
 
-        roadmap = `
-🚀 SOFTWARE ENGINEER ROADMAP
+    if(level.toLowerCase() === "beginner"){
 
-Hello ${name}!
+roadmap = `
+🚀 ===============================
+        SOFTWARE ENGINEER ROADMAP
+==================================
 
-Current Skills: ${skills}
-Experience Level: ${level}
+Hello ${name}! 👋
 
-Phase 1:
-• Learn Java, Python or JavaScript
-• Master Object Oriented Programming
-• Practice coding every day
+Congratulations on choosing Software Engineering.
 
-Phase 2:
-• Data Structures & Algorithms
-• DBMS
-• Operating Systems
-• Computer Networks
+Current Skills:
+${skills}
 
-Phase 3:
-• Build 5 real-world projects
-• Learn Git & GitHub
-• Learn React and Node.js
+Experience Level:
+${level}
 
-Phase 4:
-• Create Resume
-• Practice Interviews
-• Apply for Internships
+----------------------------------
+📖 PHASE 1 : Programming Basics
+----------------------------------
 
-🎉 Stay consistent. Every bug you solve makes you a better developer!
-`;
+✔ Learn one programming language deeply.
 
-    } else if (career.toLowerCase().includes("data")) {
-
-        roadmap = `
-📊 DATA SCIENTIST ROADMAP
-
-Hello ${name}!
-
-Current Skills: ${skills}
-Experience Level: ${level}
-
-Phase 1:
+Recommended:
+• Java
 • Python
-• SQL
-• Statistics
+• JavaScript
 
-Phase 2:
-• NumPy
-• Pandas
-• Data Visualization
+Topics
 
-Phase 3:
-• Machine Learning
-• Deep Learning
-• Build ML Projects
+• Variables
+• Data Types
+• Loops
+• Functions
+• Arrays
+• Strings
+• OOP Concepts
+• Exception Handling
+• File Handling
 
-Phase 4:
-• Kaggle
-• Portfolio
-• Resume
+Goal
 
-🚀 Keep learning. Your next dataset could become your next opportunity!
-`;
+Solve 150 beginner coding problems.
 
-    } else {
+----------------------------------
+📖 PHASE 2 : Problem Solving
+----------------------------------
 
-        roadmap = `
-🎯 ${career.toUpperCase()} ROADMAP
+Study
 
-Hello ${name}!
+• Time Complexity
+• Space Complexity
+• Big O
 
-Current Skills: ${skills}
-Experience Level: ${level}
+Master
 
-• Learn the fundamentals.
-• Take online courses.
-• Build practical projects.
-• Improve communication skills.
-• Build a portfolio.
-• Practice interviews.
-• Apply for internships and jobs.
+• Arrays
+• Strings
+• Linked List
+• Stack
+• Queue
+• Trees
+• BST
+• Graph
+• Heap
+• HashMap
+• Dynamic Programming
 
-🚀 Small progress every day leads to big success tomorrow!
+Practice
+
+• LeetCode
+• HackerRank
+• CodeChef
+• GeeksforGeeks
+
+Goal
+
+Solve 300+ coding questions.
+
+----------------------------------
+📖 PHASE 3 : Core Subjects
+----------------------------------
+
+Study
+
+✔ DBMS
+✔ Operating Systems
+✔ Computer Networks
+✔ OOP
+✔ Software Engineering
+
+Understand
+
+• SQL Queries
+• Transactions
+• Deadlocks
+• Scheduling
+• TCP/IP
+• HTTP
+• REST API
+
+Goal
+
+Be comfortable answering interview questions.
+
+----------------------------------
+📖 PHASE 4 : Development
+----------------------------------
+
+Learn
+
+✔ HTML
+✔ CSS
+✔ JavaScript
+
+Then
+
+✔ React
+✔ Node.js
+✔ Express
+
+Database
+
+✔ MySQL
+✔ MongoDB
+
+Version Control
+
+✔ Git
+✔ GitHub
+
+Goal
+
+Build real applications.
+
+----------------------------------
+🚀 PROJECTS
+----------------------------------
+
+Project 1
+Student Management System
+
+Project 2
+Hospital Management
+
+Project 3
+Library Management
+
+Project 4
+Weather Application
+
+Project 5
+Chat Application
+
+Project 6
+Expense Tracker
+
+Project 7
+Portfolio Website
+
+Project 8
+E-Commerce Website
+----------------------------------
+📜 CERTIFICATIONS
+----------------------------------
+✔ Google
+✔ Microsoft Learn
+✔ Oracle Java
+✔ AWS Academy
+✔ Coursera
+✔ Udemy
+----------------------------------
+💼 INTERVIEW PREPARATION
+----------------------------------
+✔ Resume
+✔ LinkedIn
+✔ GitHub Portfolio
+✔ HR Questions
+✔ Mock Interviews
+✔ Aptitude
+✔ Coding Interviews
+----------------------------------
+📚 DAILY ROUTINE
+----------------------------------
+Morning
+1 Hour Coding
+Afternoon
+Watch Tutorials
+Evening
+Build Projects
+Night
+Solve Coding Questions
+----------------------------------
+🔥 TIPS
+----------------------------------
+Never copy projects.
+Understand every line.
+Push code daily to GitHub.
+Read documentation.
+Build something every week.
+Stay consistent.
+----------------------------------
+🎯 1 YEAR GOAL
+----------------------------------
+✔ Strong Programming
+✔ 500 Coding Questions
+✔ 8 Projects
+✔ Resume
+✔ Portfolio
+✔ Internship Ready
+----------------------------------
+😂 Motivation
+----------------------------------
+Dear ${name},
+
+Today's bugs become tomorrow's interview stories.
+
+Every error teaches something.
+
+Every project increases your confidence.
+
+Every commit on GitHub is one step closer to your dream job.
+
+Future you is already smiling because you didn't quit.
+
+Now close this roadmap...
+
+Open VS Code...
+
+And build something awesome.
+
+🚀 Happy Coding!
 `;
     }
+    else if(level.toLowerCase() === "intermediate"){
+roadmap = `
+🚀 SOFTWARE ENGINEER ROADMAP (INTERMEDIATE)
+
+Hello ${name}!
+
+Since you already know:
+
+${skills}
+
+it's time to level up.
+
+PHASE 1
+
+✔ Advanced JavaScript
+
+✔ TypeScript
+
+✔ React
+
+✔ Redux
+
+✔ Node.js
+
+✔ Express
+
+PHASE 2
+
+Master
+
+• REST APIs
+
+• Authentication
+
+• JWT
+
+• MongoDB
+
+• SQL
+
+• Docker Basics
+
+PHASE 3
+
+Projects
+
+✔ Social Media App
+
+✔ Food Delivery App
+
+✔ Chat App
+
+✔ LMS Portal
+
+✔ Job Portal
+
+PHASE 4
+
+Deployment
+
+✔ Render
+
+✔ Vercel
+
+✔ Netlify
+
+✔ GitHub Actions
+
+PHASE 5
+
+Interview
+
+Solve 700 Coding Problems
+
+Mock Interviews
+
+System Design Basics
+
+Low Level Design
+
+High Level Design
+
+Motivation
+
+${name},
+
+The difference between a junior and senior developer isn't talent.
+
+It's consistency.
+
+Keep building.
+
+Keep learning.
+
+Keep shipping.
+
+🚀
+`;
+    }
+    else{
+roadmap = `
+🏆 SOFTWARE ENGINEER ROADMAP (ADVANCED)
+
+Hello ${name},
+
+You already possess:
+
+${skills}
+
+Now focus on becoming an industry-level engineer.
+
+Topics
+
+✔ System Design
+
+✔ Kubernetes
+
+✔ Docker
+
+✔ CI/CD
+
+✔ AWS
+
+✔ Azure
+
+✔ Microservices
+
+✔ Redis
+
+✔ Kafka
+
+✔ Design Patterns
+
+Projects
+
+✔ Netflix Clone
+
+✔ Amazon Clone
+
+✔ Distributed Chat App
+
+✔ Video Streaming Platform
+
+✔ Banking Backend
+
+Interview
+
+FAANG Preparation
+
+1000+ Coding Problems
+
+Behavioral Interviews
+
+Leadership
+
+Code Reviews
+
+Open Source Contributions
+
+Future Goal
+
+Become a Tech Lead.
+
+Build products used by millions.
+
+Keep inspiring others.
+
+🔥 Never stop learning.
+`;
+    }
+}
     res.json({ roadmap });
 
 });
