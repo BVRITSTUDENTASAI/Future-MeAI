@@ -100,26 +100,26 @@ form.addEventListener("submit", async function(e){
     button.innerHTML = "Generating...";
 
     try{
+        const response = await fetch("http://localhost:5000/generate", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        name,
+        skills,
+        career,
+        level
+    })
+});
 
-        const response = await fetch("/generate",{
+if (!response.ok) {
+    const text = await response.text();
+    console.error(text);
+    throw new Error("Server Error");
+}
 
-            method:"POST",
-
-            headers:{
-                "Content-Type":"application/json"
-            },
-
-            body:JSON.stringify({
-                name,
-                skills,
-                career,
-                level
-            })
-
-        });
-
-        const data = await response.json();
-
+const data = await response.json();
         button.innerHTML = "Roadmap Generated ✓";
 
         let result = document.getElementById("result");
