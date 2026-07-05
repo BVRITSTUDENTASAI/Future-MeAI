@@ -1,63 +1,117 @@
 console.log("THIS IS MY SERVER.JS");
+
 const express = require("express");
 const path = require("path");
-const dotenv = require("dotenv");
-const OpenAI = require("openai");
-dotenv.config();
+
 const app = express();
+
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
-const client = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY
-});
+
 app.get("/test", (req, res) => {
     res.send("Server is working!");
 });
-app.post("/generate", async (req, res) => {
 
-    console.log("🔥 Route reached");
+app.post("/generate", (req, res) => {
 
-    try {
-        const { name, skills, career, level } = req.body;
+    const { name, skills, career, level } = req.body;
 
-        console.log("📦 Request body:", req.body);
-        console.log("🔑 API KEY exists:", !!process.env.OPENAI_API_KEY);
+    let roadmap = "";
 
-        const prompt = `
-You are a career mentor.
-Generate a detailed career roadmap.
+    if (career.toLowerCase().includes("software")) {
 
-Name: ${name}
-Skills: ${skills}
-Career: ${career}
-Level: ${level}
+        roadmap = `
+🚀 SOFTWARE ENGINEER ROADMAP
+
+Hello ${name}!
+
+Current Skills: ${skills}
+Experience Level: ${level}
+
+Phase 1:
+• Learn Java, Python or JavaScript
+• Master Object Oriented Programming
+• Practice coding every day
+
+Phase 2:
+• Data Structures & Algorithms
+• DBMS
+• Operating Systems
+• Computer Networks
+
+Phase 3:
+• Build 5 real-world projects
+• Learn Git & GitHub
+• Learn React and Node.js
+
+Phase 4:
+• Create Resume
+• Practice Interviews
+• Apply for Internships
+
+🎉 Stay consistent. Every bug you solve makes you a better developer!
 `;
 
-        console.log("🚀 Calling OpenAI...");
+    } else if (career.toLowerCase().includes("data")) {
 
-        const response = await client.responses.create({
-            model: "gpt-4o-mini",
-            input: prompt
-        });
+        roadmap = `
+📊 DATA SCIENTIST ROADMAP
 
-        console.log(" OpenAI success");
+Hello ${name}!
 
-        return res.json({
-            roadmap: response.output_text
-        });
+Current Skills: ${skills}
+Experience Level: ${level}
 
-    } catch (error) {
-        console.log("🔥 FULL ERROR:");
-        console.log(error);
-        console.log("🔥 MESSAGE:", error.message);
+Phase 1:
+• Python
+• SQL
+• Statistics
 
-        return res.status(500).json({
-            error: error.message
-        });
+Phase 2:
+• NumPy
+• Pandas
+• Data Visualization
+
+Phase 3:
+• Machine Learning
+• Deep Learning
+• Build ML Projects
+
+Phase 4:
+• Kaggle
+• Portfolio
+• Resume
+
+🚀 Keep learning. Your next dataset could become your next opportunity!
+`;
+
+    } else {
+
+        roadmap = `
+🎯 ${career.toUpperCase()} ROADMAP
+
+Hello ${name}!
+
+Current Skills: ${skills}
+Experience Level: ${level}
+
+• Learn the fundamentals.
+• Take online courses.
+• Build practical projects.
+• Improve communication skills.
+• Build a portfolio.
+• Practice interviews.
+• Apply for internships and jobs.
+
+🚀 Small progress every day leads to big success tomorrow!
+`;
     }
+    res.json({ roadmap });
+
 });
-// AI Route
-const PORT = 5000;
+
+const PORT = process.env.PORT || 5000;
+
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
