@@ -25,11 +25,11 @@
             🚀 FutureMe AI
         </div>
         <ul>
-            <li>Home</li>
-            <li>Features</li>
-            <li>Roadmaps</li>
-            <li>About</li>
-            <li>Contact</li>
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#careerForm">Roadmaps</a></li>
+            <li><a href="#steps">About</a></li>
+            <li><a href="#footer">Contact</a></li>
         </ul>
         <button id="startBtn">
             Get Started
@@ -38,22 +38,28 @@
     <!-- ========================= -->
     <!-- Hero -->
     <!-- ========================= -->
-    <section id="hero">
-        <div id="leftHero">
-            <h1>
-                Build Your Dream Career with AI
-            </h1>
-            <p>
-                Personalized AI-generated career roadmaps,
-                skill analysis, learning plans,
-                certifications, projects,
-                interview preparation and much more.
-            </p>
-            <button id="generateBtn">
-                Generate My Roadmap →
-            </button>
-        </div>
-    </section>
+     <section id="hero">
+
+    <div id="leftHero">
+
+        <h1>
+            Build Your Dream Career with AI
+        </h1>
+
+        <p>
+            Personalized AI-generated career roadmaps,
+            skill analysis, learning plans,
+            certifications, project recommendations,
+            interview preparation and much more.
+        </p>
+
+        <button id="generateBtn">
+            Generate My Roadmap →
+        </button>
+
+    </div>
+
+</section>
     <!-- ========================= -->
     <!-- Career Form -->
     <!-- ========================= -->
@@ -65,10 +71,11 @@
             Enter your current skills and dream career.
         </p>
         <form>
-            <input
-                type="text"
-                placeholder="Your Name"
-                required>
+            <input 
+            type="text"
+            placeholder="Your Name"
+            autocomplete="name"
+            required>
             <input
                 type="text"
                 placeholder="Current Skills"
@@ -78,8 +85,8 @@
                 placeholder="Dream Career"
                 required>
             <select required>
-                <option>
-                    Select Experience Level
+            <option value="" selected disabled>
+                Select Experience Level
                 </option>
                 <option>
                     Beginner
@@ -99,8 +106,7 @@
     <!-- ========================= -->
     <!-- Result -->
     <!-- ========================= -->
-    <section id="result">
-    </section>
+    <section id="result" style="display:none;"></section>
     <!-- ========================= -->
     <!-- Features -->
     <!-- ========================= -->
@@ -210,30 +216,17 @@
     <!-- Footer -->
     <!-- ========================= -->
 
-    <footer>
-
+    <footer id="footer">
         <h2>
-
             🚀 FutureMe AI
-
         </h2>
-
         <p>
-
             AI Powered Career Mentor
-
         </p>
-
         <p>
-
             Built with HTML, CSS, JavaScript, Node.js, Express & OpenAI
-
         </p>
-
     </footer>
-
     <script src="script.js"></script>
-
 </body>
-
 </html>

@@ -7,7 +7,7 @@ const OpenAI = require("openai");
 const app = express();
 
 const client = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
+    apiKey: process.env.OPENAI_API_KEY
 });
 
 app.use(express.json());
@@ -18,11 +18,10 @@ app.get("/", (req, res) => {
 });
 
 app.get("/test", (req, res) => {
-    res.send(" FutureMe AI Server is Running!");
+    res.send("🚀 FutureMe AI Server is Running!");
 });
 
 app.post("/generate", async (req, res) => {
-
     try {
 
         const { name, skills, career, level } = req.body;
@@ -34,10 +33,9 @@ app.post("/generate", async (req, res) => {
         }
 
         const prompt = `
-You are FutureMe AI, an intelligent AI Career Mentor.
+You are FutureMe AI, an expert AI Career Mentor.
 
-Student Name:
-${name}
+Student Name: ${name}
 
 Current Skills:
 ${skills}
@@ -48,57 +46,36 @@ ${career}
 Experience Level:
 ${level}
 
-Generate a highly personalized career roadmap.
+Generate a detailed personalized career roadmap.
 
-The roadmap must contain the following sections:
+Include the following sections:
 
 1. Welcome Message
-
 2. Career Overview
-
-3. Skills Required
-
+3. Required Skills
 4. Programming Languages
-
-5. Technologies To Learn
-
+5. Technologies to Learn
 6. Step-by-Step Learning Path
-
-7. Best Free Resources
-
-8. Recommended Certifications
-
+7. Free Learning Resources
+8. Certifications
 9. Beginner Projects
-
 10. Intermediate Projects
-
 11. Advanced Projects
-
-12. Interview Preparation Tips
-
+12. Interview Preparation
 13. Resume Tips
-
 14. GitHub Portfolio Tips
-
 15. Daily Study Plan
-
-16. Weekly Study Plan
-
-17. Common Mistakes To Avoid
-
-18. Estimated Time Required
-
+16. Weekly Goals
+17. Common Mistakes
+18. Estimated Time
 19. Motivation
 
-Format the response beautifully using headings, bullet points and emojis.
+Use headings, bullet points and emojis.
 `;
 
         const response = await client.responses.create({
-
             model: "gpt-4.1-mini",
-
             input: prompt
-
         });
 
         const roadmap = response.output_text;
@@ -107,10 +84,8 @@ Format the response beautifully using headings, bullet points and emojis.
             roadmap
         });
 
-    }
-    catch (error) {
+    } catch (error) {
 
-        console.error("OpenAI Error:");
         console.error(error);
 
         res.status(500).json({
@@ -118,13 +93,10 @@ Format the response beautifully using headings, bullet points and emojis.
         });
 
     }
-
 });
 
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-
-    console.log(`🚀 FutureMe AI running on http://localhost:${PORT}`);
-
+    console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
