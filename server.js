@@ -1,102 +1,126 @@
-require("dotenv").config();
+// =============================
+// FutureMe AI
+// =============================
 
-const express = require("express");
-const path = require("path");
-const OpenAI = require("openai");
+const startBtn = document.getElementById("startBtn");
+const generateBtn = document.getElementById("generateBtn");
+const careerForm = document.getElementById("careerForm");
+const form = document.querySelector("#careerForm form");
+const result = document.getElementById("result");
 
-const app = express();
-
-const client = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY
+// Smooth Scroll
+startBtn.addEventListener("click", () => {
+    careerForm.scrollIntoView({ behavior: "smooth" });
 });
 
-app.use(express.json());
-app.use(express.static(path.join(__dirname, "public")));
-
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "index.html"));
+generateBtn.addEventListener("click", () => {
+    careerForm.scrollIntoView({ behavior: "smooth" });
 });
 
-app.get("/test", (req, res) => {
-    res.send("🚀 FutureMe AI Server is Running!");
-});
+// Form Submit
+form.addEventListener("submit", async (e) => {
 
-app.post("/generate", async (req, res) => {
+    e.preventDefault();
+
+    const name = form.querySelector('input[placeholder="Your Name"]').value.trim();
+    const skills = form.querySelector('input[placeholder="Current Skills"]').value.trim();
+    const career = form.querySelector('input[placeholder="Dream Career"]').value.trim();
+    const level = form.querySelector("select").value;
+
+    if (!name || !skills || !career || !level) {
+        alert("Please fill all fields.");
+        return;
+    }
+
+    const button = form.querySelector("button");
+    button.disabled = true;
+    button.innerHTML = "🤖 Generating AI Roadmap...";
+
     try {
 
-        const { name, skills, career, level } = req.body;
+        const response = await fetch("/generate", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name,
+                skills,
+                career,
+                level
+            })
+        });
 
-        if (!name || !skills || !career || !level) {
-            return res.status(400).json({
-                error: "Please fill all fields."
-            });
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || "Failed to generate roadmap.");
         }
 
-        const prompt = `
-You are FutureMe AI, an expert AI Career Mentor.
+        result.style.display = "block";
 
-Student Name: ${name}
+        result.innerHTML = `
+            <h2>🚀 Your Personalized AI Career Roadmap</h2>
+            <div style="white-space: pre-wrap;">
+                ${data.roadmap}
+            </div>
+        `;
 
-Current Skills:
-${skills}
-
-Dream Career:
-${career}
-
-Experience Level:
-${level}
-
-Generate a detailed personalized career roadmap.
-
-Include the following sections:
-
-1. Welcome Message
-2. Career Overview
-3. Required Skills
-4. Programming Languages
-5. Technologies to Learn
-6. Step-by-Step Learning Path
-7. Free Learning Resources
-8. Certifications
-9. Beginner Projects
-10. Intermediate Projects
-11. Advanced Projects
-12. Interview Preparation
-13. Resume Tips
-14. GitHub Portfolio Tips
-15. Daily Study Plan
-16. Weekly Goals
-17. Common Mistakes
-18. Estimated Time
-19. Motivation
-
-Use headings, bullet points and emojis.
-`;
-
-        const response = await client.responses.create({
-            model: "gpt-4.1-mini",
-            input: prompt
+        result.scrollIntoView({
+            behavior: "smooth"
         });
 
-        const roadmap = response.output_text;
+    } catch (err) {
 
-        res.json({
-            roadmap
-        });
+        console.error(err);
+        alert(err.message);
 
-    } catch (error) {
+    } finally {
 
-        console.error(error);
-
-        res.status(500).json({
-            error: "Failed to generate roadmap."
-        });
+        button.disabled = false;
+        button.innerHTML = "Generate Career Roadmap";
 
     }
+
 });
 
-const PORT = process.env.PORT || 5000;
+// Reveal Animation
+const sections = document.querySelectorAll(
+"#hero,#careerForm,#features,#steps,#result,footer,.card,.step"
+);
 
-app.listen(PORT, () => {
-    console.log(`🚀 Server running at http://localhost:${PORT}`);
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+        }
+    });
+}, {
+    threshold: 0.2
 });
+
+sections.forEach((section) => {
+    section.style.opacity = "0";
+    section.style.transform = "translateY(40px)";
+    section.style.transition = "all .8s ease";
+    observer.observe(section);
+});
+
+// Navbar Shadow
+window.addEventListener("scroll", () => {
+
+    const nav = document.querySelector("nav");
+
+    if (window.scrollY > 20) {
+        nav.style.boxShadow = "0 10px 25px rgba(0,0,0,.15)";
+    } else {
+        nav.style.boxShadow = "none";
+    }
+
+});
+
+// Welcome
+window.onload = () => {
+    console.log("🚀 Welcome to FutureMe AI");
+};

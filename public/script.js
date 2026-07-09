@@ -53,7 +53,7 @@ form.addEventListener("submit", async function (e) {
     button.innerHTML = "🤖 Generating AI Roadmap...";
 
     try {
-
+        
         const response = await fetch("/generate", {
             method: "POST",
             headers: {
@@ -86,19 +86,15 @@ ${data.roadmap}
             behavior: "smooth"
         });
 
-    } catch (error) {
-
-        console.error(error);
-
-        alert("Unable to connect to AI Server.");
-
-    } finally {
-
-        button.disabled = false;
-        button.innerHTML = "Generate Career Roadmap";
-
     }
+    catch (error) {
+    console.log("========== GROQ ERROR ==========");
+    console.dir(error, { depth: null });
 
+    res.status(500).json({
+        error: error.message || "Failed to generate roadmap."
+    });
+}
 });
 
 // =============================
