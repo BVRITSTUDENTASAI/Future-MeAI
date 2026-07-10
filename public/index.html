@@ -17,216 +17,312 @@
 
 <body>
 
-    <!-- ========================= -->
-    <!-- Navbar -->
-    <!-- ========================= -->
-    <nav>
-        <div class="logo">
-            🚀 FutureMe AI
-        </div>
-        <ul>
-            <li><a href="#hero">Home</a></li>
-            <li><a href="#features">Features</a></li>
-            <li><a href="#careerForm">Roadmaps</a></li>
-            <li><a href="#steps">About</a></li>
-            <li><a href="#footer">Contact</a></li>
-        </ul>
-        <button id="startBtn">
-            Get Started
-        </button>
-    </nav>
-    <!-- ========================= -->
-    <!-- Hero -->
-    <!-- ========================= -->
-     <section id="hero">
+<!-- ========================= -->
+<!-- Navbar -->
+<!-- ========================= -->
+
+<nav>
+
+    <div class="logo">
+        🚀 FutureMe AI
+    </div>
+
+    <ul>
+
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#careerForm">Roadmap</a></li>
+        <li><a href="#steps">How it Works</a></li>
+        <li><a href="#footer">Contact</a></li>
+
+    </ul>
+
+    <button id="startBtn">
+        Get Started
+    </button>
+
+</nav>
+
+<!-- ========================= -->
+<!-- Hero -->
+<!-- ========================= -->
+
+<section id="hero">
 
     <div id="leftHero">
 
         <h1>
-            Build Your Dream Career with AI
+            Build Your Dream Career with AI 🚀
         </h1>
 
         <p>
-            Personalized AI-generated career roadmaps,
-            skill analysis, learning plans,
-            certifications, project recommendations,
-            interview preparation and much more.
+
+            FutureMe AI creates a personalized roadmap for your dream career.
+
+            Discover
+
+            ✔ Skills to Learn
+
+            ✔ Technologies
+
+            ✔ Projects
+
+            ✔ Certifications
+
+            ✔ Interview Preparation
+
+            ✔ Daily Study Plan
+
         </p>
 
         <button id="generateBtn">
+
             Generate My Roadmap →
+
         </button>
 
     </div>
 
 </section>
-    <!-- ========================= -->
-    <!-- Career Form -->
-    <!-- ========================= -->
-    <section id="careerForm">
-        <h2>
-            Tell FutureMe AI About Yourself
-        </h2>
-        <p>
-            Enter your current skills and dream career.
-        </p>
-        <form>
-            <input 
+
+<!-- ========================= -->
+<!-- Form -->
+<!-- ========================= -->
+
+<section id="careerForm">
+
+    <h2>
+        Tell FutureMe AI About Yourself
+    </h2>
+
+    <p>
+        Enter your current skills and your dream career.
+    </p>
+
+    <form>
+
+        <input
+
             type="text"
+
             placeholder="Your Name"
-            autocomplete="name"
-            required>
-            <input
-                type="text"
-                placeholder="Current Skills"
-                required>
-            <input
-                type="text"
-                placeholder="Dream Career"
-                required>
-            <select required>
+
+            required
+
+        >
+
+        <input
+
+            type="text"
+
+            placeholder="Current Skills"
+
+            required
+
+        >
+
+        <input
+
+            type="text"
+
+            placeholder="Dream Career"
+
+            required
+
+        >
+
+        <select required>
+
             <option value="" selected disabled>
+
                 Select Experience Level
-                </option>
-                <option>
-                    Beginner
-                </option>
-                <option>
-                    Intermediate
-                </option>
-                <option>
-                    Advanced
-                </option>
-            </select>
-            <button type="submit">
-                Generate Career Roadmap
-            </button>
-        </form>
-    </section>
-    <!-- ========================= -->
-    <!-- Result -->
-    <!-- ========================= -->
-    <section id="result" style="display:none;"></section>
-    <!-- ========================= -->
-    <!-- Features -->
-    <!-- ========================= -->
-    <section id="features">
-        <h2>
-            Why FutureMe AI?
-        </h2>
-        <div class="cards">
-            <div class="card">
-                <h3>
-                    AI Career Guidance
-                </h3>
-                <p>
-                    Personalized career advice generated using OpenAI.
-                </p>
-            </div>
-            <div class="card">
-                <h3>
-                    Skill Gap Analysis
-                </h3>
-                <p>
-                    Identify missing skills required for your dream career.
 
-                </p>
+            </option>
 
-            </div>
+            <option>
 
-            <div class="card">
+                Beginner
 
-                <h3>
+            </option>
 
-                    Project Recommendations
+            <option>
 
-                </h3>
+                Intermediate
 
-                <p>
+            </option>
 
-                    Build resume-worthy projects recommended by AI.
+            <option>
 
-                </p>
+                Advanced
 
-            </div>
+            </option>
 
-            <div class="card">
+        </select>
 
-                <h3>
+        <button type="submit">
 
-                    Interview Preparation
+            Generate Career Roadmap
 
-                </h3>
+        </button>
 
-                <p>
+    </form>
 
-                    Learn interview questions and preparation strategies.
+</section>
 
-                </p>
+<!-- ========================= -->
+<!-- AI Result -->
+<!-- ========================= -->
 
-            </div>
+<section id="result" style="display:none;">
+
+</section>
+
+<!-- ========================= -->
+<!-- Features -->
+<!-- ========================= -->
+
+<section id="features">
+
+    <h2>
+
+        Why FutureMe AI?
+
+    </h2>
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h3>
+                🤖 AI Guidance
+            </h3>
+
+            <p>
+
+                Personalized career recommendations generated by AI.
+
+            </p>
 
         </div>
 
-    </section>
+        <div class="card">
 
+            <h3>
 
+                📚 Skill Gap Analysis
 
-    <!-- ========================= -->
-    <!-- Steps -->
-    <!-- ========================= -->
+            </h3>
 
-    <section id="steps">
+            <p>
 
-        <h2>
+                Discover which skills you still need.
 
-            How It Works
-
-        </h2>
-
-        <div class="step">
-
-            1️⃣ Enter your information.
+            </p>
 
         </div>
 
-        <div class="step">
+        <div class="card">
 
-            2️⃣ AI analyzes your profile.
+            <h3>
 
-        </div>
+                💻 Projects
 
-        <div class="step">
+            </h3>
 
-            3️⃣ OpenAI generates a personalized roadmap.
+            <p>
 
-        </div>
+                Build real-world projects for your portfolio.
 
-        <div class="step">
-
-            4️⃣ Start learning and achieve your dream career.
+            </p>
 
         </div>
 
-    </section>
+        <div class="card">
 
+            <h3>
 
+                🎯 Interview Prep
 
-    <!-- ========================= -->
-    <!-- Footer -->
-    <!-- ========================= -->
+            </h3>
 
-    <footer id="footer">
-        <h2>
-            🚀 FutureMe AI
-        </h2>
-        <p>
-            AI Powered Career Mentor
-        </p>
-        <p>
-            Built with HTML, CSS, JavaScript, Node.js, Express & OpenAI
-        </p>
-    </footer>
-    <script src="script.js"></script>
+            <p>
+
+                Prepare confidently with interview tips.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ========================= -->
+<!-- Steps -->
+<!-- ========================= -->
+
+<section id="steps">
+
+    <h2>
+
+        How It Works
+
+    </h2>
+
+    <div class="step">
+
+        1️⃣ Enter your details.
+
+    </div>
+
+    <div class="step">
+
+        2️⃣ AI analyzes your profile.
+
+    </div>
+
+    <div class="step">
+
+        3️⃣ Generates a personalized roadmap.
+
+    </div>
+
+    <div class="step">
+
+        4️⃣ Start learning and achieve your dream career.
+
+    </div>
+
+</section>
+
+<!-- ========================= -->
+<!-- Footer -->
+<!-- ========================= -->
+
+<footer id="footer">
+
+    <h2>
+
+        🚀 FutureMe AI
+
+    </h2>
+
+    <p>
+
+        AI Powered Career Mentor
+
+    </p>
+
+    <p>
+
+        Built using HTML, CSS, JavaScript, Node.js, Express & Groq AI
+
+    </p>
+
+</footer>
+
+<script src="script.js"></script>
+
 </body>
+
 </html>

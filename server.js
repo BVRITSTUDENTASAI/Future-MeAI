@@ -1,126 +1,140 @@
-// =============================
-// FutureMe AI
-// =============================
+require("dotenv").config();
 
-const startBtn = document.getElementById("startBtn");
-const generateBtn = document.getElementById("generateBtn");
-const careerForm = document.getElementById("careerForm");
-const form = document.querySelector("#careerForm form");
-const result = document.getElementById("result");
+const express = require("express");
+const path = require("path");
+const Groq = require("groq-sdk");
 
-// Smooth Scroll
-startBtn.addEventListener("click", () => {
-    careerForm.scrollIntoView({ behavior: "smooth" });
+const app = express();
+
+// -------------------------------
+// Check API Key
+// -------------------------------
+if (!process.env.GROQ_API_KEY) {
+    console.log("❌ GROQ_API_KEY not found in .env");
+    process.exit(1);
+}
+
+const groq = new Groq({
+    apiKey: process.env.GROQ_API_KEY,
 });
 
-generateBtn.addEventListener("click", () => {
-    careerForm.scrollIntoView({ behavior: "smooth" });
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(express.static(path.join(__dirname, "public")));
+
+// -------------------------------
+// Home Route
+// -------------------------------
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// Form Submit
-form.addEventListener("submit", async (e) => {
+// -------------------------------
+// Test Route
+// -------------------------------
+app.get("/test", (req, res) => {
+    res.send("🚀 FutureMe AI Server is Running!");
+});
 
-    e.preventDefault();
+// -------------------------------
+// Generate Career Roadmap
+// -------------------------------
+app.post("/generate", async (req, res) => {
 
-    const name = form.querySelector('input[placeholder="Your Name"]').value.trim();
-    const skills = form.querySelector('input[placeholder="Current Skills"]').value.trim();
-    const career = form.querySelector('input[placeholder="Dream Career"]').value.trim();
-    const level = form.querySelector("select").value;
-
-    if (!name || !skills || !career || !level) {
-        alert("Please fill all fields.");
-        return;
-    }
-
-    const button = form.querySelector("button");
-    button.disabled = true;
-    button.innerHTML = "🤖 Generating AI Roadmap...";
+    console.log("📩 Request Received");
+    console.log(req.body);
 
     try {
 
-        const response = await fetch("/generate", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                name,
-                skills,
-                career,
-                level
-            })
-        });
+        const { name, skills, career, level } = req.body;
 
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.error || "Failed to generate roadmap.");
+        if (!name || !skills || !career || !level) {
+            return res.status(400).json({
+                error: "Please fill all fields."
+            });
         }
 
-        result.style.display = "block";
+        const prompt = `
+You are FutureMe AI.
 
-        result.innerHTML = `
-            <h2>🚀 Your Personalized AI Career Roadmap</h2>
-            <div style="white-space: pre-wrap;">
-                ${data.roadmap}
-            </div>
-        `;
+Student Name: ${name}
 
-        result.scrollIntoView({
-            behavior: "smooth"
+Current Skills: ${skills}
+
+Dream Career: ${career}
+
+Experience Level: ${level}
+
+Generate a detailed career roadmap with:
+
+1. Career Overview
+2. Skills Required
+3. Technologies
+4. Learning Path
+5. Free Resources
+6. Certifications
+7. Projects
+8. Interview Preparation
+9. Resume Tips
+10. Daily Study Plan
+
+Use headings, bullet points and emojis.
+`;
+
+        console.log("📤 Sending request to Groq...");
+
+        const completion = await groq.chat.completions.create({
+            model: "llama-3.3-70b-versatile",
+            messages: [
+                {
+                    role: "user",
+                    content: prompt,
+                },
+            ],
+            temperature: 0.7,
+            max_tokens: 2048,
+        });
+
+        console.log("✅ Response received");
+
+        res.json({
+            roadmap: completion.choices[0].message.content,
         });
 
     } catch (err) {
 
-        console.error(err);
-        alert(err.message);
+        console.log("========== GROQ ERROR ==========");
 
-    } finally {
+        console.dir(err, { depth: null });
 
-        button.disabled = false;
-        button.innerHTML = "Generate Career Roadmap";
-
+        res.status(500).json({
+            error: err.message || "Failed to generate roadmap.",
+        });
     }
-
 });
 
-// Reveal Animation
-const sections = document.querySelectorAll(
-"#hero,#careerForm,#features,#steps,#result,footer,.card,.step"
-);
+// -------------------------------
+// Start Server
+// -------------------------------
+const PORT = process.env.PORT || 5000;
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = "1";
-            entry.target.style.transform = "translateY(0)";
-        }
-    });
-}, {
-    threshold: 0.2
+const server = app.listen(PORT, () => {
+    console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
 
-sections.forEach((section) => {
-    section.style.opacity = "0";
-    section.style.transform = "translateY(40px)";
-    section.style.transition = "all .8s ease";
-    observer.observe(section);
+server.on("close", () => {
+    console.log("❌ Server closed!");
 });
 
-// Navbar Shadow
-window.addEventListener("scroll", () => {
-
-    const nav = document.querySelector("nav");
-
-    if (window.scrollY > 20) {
-        nav.style.boxShadow = "0 10px 25px rgba(0,0,0,.15)";
-    } else {
-        nav.style.boxShadow = "none";
-    }
-
+process.on("exit", (code) => {
+    console.log("❌ Process exited with code:", code);
 });
 
-// Welcome
-window.onload = () => {
-    console.log("🚀 Welcome to FutureMe AI");
-};
+process.on("beforeExit", (code) => {
+    console.log("⚠️ beforeExit:", code);
+});
+
+setInterval(() => {
+    console.log("✅ Server still alive...");
+}, 5000);

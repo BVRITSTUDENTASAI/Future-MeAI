@@ -28,7 +28,7 @@ generateBtn.addEventListener("click", () => {
 // Form Submission
 // =============================
 
-form.addEventListener("submit", async function (e) {
+form.addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
@@ -37,13 +37,8 @@ form.addEventListener("submit", async function (e) {
     const career = form.querySelector('input[placeholder="Dream Career"]').value.trim();
     const level = form.querySelector("select").value;
 
-    if (!name || !skills || !career) {
+    if (!name || !skills || !career || !level) {
         alert("Please fill all the fields.");
-        return;
-    }
-
-    if (level === "" || level === "Select Experience Level") {
-        alert("Please select your experience level.");
         return;
     }
 
@@ -52,33 +47,40 @@ form.addEventListener("submit", async function (e) {
     button.disabled = true;
     button.innerHTML = "🤖 Generating AI Roadmap...";
 
+    result.style.display = "none";
+
     try {
-        
+
         const response = await fetch("/generate", {
+
             method: "POST",
+
             headers: {
                 "Content-Type": "application/json"
             },
+
             body: JSON.stringify({
                 name,
                 skills,
                 career,
                 level
             })
+
         });
 
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(data.error);
+            throw new Error(data.error || "Failed to generate roadmap.");
         }
 
         result.style.display = "block";
 
         result.innerHTML = `
             <h2>🚀 Your Personalized AI Career Roadmap</h2>
-            <div style="white-space:pre-wrap;">
-${data.roadmap}
+
+            <div style="white-space:pre-wrap; line-height:1.7;">
+                ${data.roadmap}
             </div>
         `;
 
@@ -87,14 +89,22 @@ ${data.roadmap}
         });
 
     }
-    catch (error) {
-    console.log("========== GROQ ERROR ==========");
-    console.dir(error, { depth: null });
 
-    res.status(500).json({
-        error: error.message || "Failed to generate roadmap."
-    });
-}
+    catch (error) {
+
+        console.error(error);
+
+        alert(error.message || "Unable to connect to the server.");
+
+    }
+
+    finally {
+
+        button.disabled = false;
+        button.innerHTML = "Generate Career Roadmap";
+
+    }
+
 });
 
 // =============================
@@ -105,28 +115,30 @@ const sections = document.querySelectorAll(
 "#hero,#careerForm,#features,#steps,#result,footer,.card,.step"
 );
 
-const observer = new IntersectionObserver(function(entries){
+const observer = new IntersectionObserver((entries) => {
 
-    entries.forEach(function(entry){
+    entries.forEach((entry) => {
 
-        if(entry.isIntersecting){
+        if (entry.isIntersecting) {
 
-            entry.target.style.opacity="1";
-            entry.target.style.transform="translateY(0)";
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
 
         }
 
     });
 
-},{
-    threshold:0.2
+}, {
+
+    threshold: 0.2
+
 });
 
-sections.forEach(function(section){
+sections.forEach((section) => {
 
-    section.style.opacity="0";
-    section.style.transform="translateY(40px)";
-    section.style.transition="all .8s ease";
+    section.style.opacity = "0";
+    section.style.transform = "translateY(40px)";
+    section.style.transition = "all .8s ease";
 
     observer.observe(section);
 
@@ -136,17 +148,19 @@ sections.forEach(function(section){
 // Navbar Shadow
 // =============================
 
-window.addEventListener("scroll",function(){
+window.addEventListener("scroll", () => {
 
-    const nav=document.querySelector("nav");
+    const nav = document.querySelector("nav");
 
-    if(window.scrollY>20){
+    if (window.scrollY > 20) {
 
-        nav.style.boxShadow="0 10px 25px rgba(0,0,0,.15)";
+        nav.style.boxShadow = "0 10px 25px rgba(0,0,0,.15)";
 
-    }else{
+    }
 
-        nav.style.boxShadow="none";
+    else {
+
+        nav.style.boxShadow = "none";
 
     }
 
@@ -156,19 +170,19 @@ window.addEventListener("scroll",function(){
 // Feature Card Hover
 // =============================
 
-const cards=document.querySelectorAll(".card");
+const cards = document.querySelectorAll(".card");
 
-cards.forEach(function(card){
+cards.forEach((card) => {
 
-    card.addEventListener("mouseenter",function(){
+    card.addEventListener("mouseenter", () => {
 
-        card.style.transform="translateY(-10px) scale(1.03)";
+        card.style.transform = "translateY(-10px) scale(1.03)";
 
     });
 
-    card.addEventListener("mouseleave",function(){
+    card.addEventListener("mouseleave", () => {
 
-        card.style.transform="translateY(0) scale(1)";
+        card.style.transform = "translateY(0) scale(1)";
 
     });
 
@@ -178,7 +192,7 @@ cards.forEach(function(card){
 // Welcome
 // =============================
 
-window.onload=function(){
+window.onload = () => {
 
     console.log("🚀 Welcome to FutureMe AI");
 
